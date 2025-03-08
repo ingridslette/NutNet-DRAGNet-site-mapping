@@ -44,3 +44,18 @@ ggmap(myMap) + geom_point(data = dragnutnetsites, aes(x = longitude, y = latitud
                           cex=2, shape = 21, col = 'black') +
   scale_fill_manual(values = cbp4) + 
   labs(fill = "Experiment Type", x = "Longitude", y = "Latitude")
+
+
+# mapping DRAGNet and NutNet sites - no distinction 
+
+dragnutnetsites <- read.csv("/Users/ingridslette/Desktop/DragNutNet-site-list.csv")
+
+bbox <- c(left = -168, bottom = -60, right = 178, top = 80)
+myMap <- get_stadiamap(bbox, zoom = 4, maptype = "stamen_terrain_background")
+
+ggmap(myMap) + geom_point(data = dragnutnetsites, aes(x = longitude, y = latitude), 
+                          cex=1.5, shape = 21, col = 'black', fill = '#e2741a') + 
+  labs(x = "", y = "") +
+  theme(axis.ticks = element_blank(), axis.text = element_blank())
+
+
