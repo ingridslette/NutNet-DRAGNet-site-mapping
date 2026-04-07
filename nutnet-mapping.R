@@ -32,4 +32,17 @@ ggmap(myMap) +
   )
 
 
+ggmap(myMap) +
+  geom_point(
+    data = nutnetsites,
+    aes(x = longitude, y = latitude, fill = experiment_type),
+    cex = 2, shape = 21, col = "black"
+  ) +
+  scale_fill_manual(values = cbp2) +
+  labs(fill = "Site Type", x = "", y = "") +
+  theme(
+    legend.position = "none",
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  )
 
