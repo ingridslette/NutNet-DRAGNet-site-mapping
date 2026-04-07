@@ -24,8 +24,8 @@ site_map
 
 site_clim_fig <- ggplot(sites, aes(x = MAP, y = MAT, fill = network, shape = network)) +
   geom_point() + 
-  labs(x = "MAP (mm)", fill = "Network", shape = "Network",
-       y = expression(paste("MAT (",degree,"C)"))) +
+  labs(x = "Mean Annual Precipitaiton (mm)", fill = "Network", shape = "Network",
+       y = expression(paste("Mean Annual Temperature (",degree,"C)"))) +
   scale_fill_manual(values = c("#ff924c", "#0092E0", '#9656a2')) +
   scale_shape_manual(values = c(21, 22, 23)) +
   scale_y_continuous(limits = c(-10, 30)) +
