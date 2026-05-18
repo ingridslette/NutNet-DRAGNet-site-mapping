@@ -1,61 +1,32 @@
 library(ggplot2)
 library(ggmap)
 
-## maping global NutNet sites
-nutnetsites <- read.csv("/Users/ingridslette/Desktop/NutNet/NutNet-site-list.csv")
-
 register_stadiamaps("98dda47f-a35b-4ead-aa46-dda02c95d912", write = FALSE)
 stadiamaps_key()
 has_stadiamaps_key()
 
-bbox <- c(left = -170, bottom = -60, right = 170, top = 80.5)
-myMap <- get_stadiamap(bbox, zoom = 4, maptype = "stamen_terrain_background")
-
-cbp2 <- c("#D55E00", "#56B4E9")
-
-ggmap(myMap) + geom_point(data = nutnetsites, aes(x = longitude, y = latitude, fill = experiment.type), 
-                          cex=2, shape = 21, col = 'black') + 
-  scale_fill_manual(values = cbp2) + 
-  labs(fill = "Site Type", x = "Longitude", y = "Latitude")
-
-
-## mapping US NutNet sites
-bbox_us <- c(left = -137, bottom = 10, right = -57, top = 60)
-myMap_us <- get_stadiamap(bbox_us, zoom = 4, maptype = "stamen_terrain_background")
-
-ggmap(myMap_us) + geom_point(data = subset(nutnetsites, experiment.type == "Experimental"), aes(x = longitude, y = latitude, fill = experiment.type), 
-                             cex = 2, shape = 21, col = 'black') + 
-  scale_fill_manual(values = cbp2) + 
-  labs(fill = "Site Type", x = "Longitude", y = "Latitude")
-
-
 # mapping DRAGNet and NutNet sites
-dragnutnetsites <- read.csv('/Users/ingridslette/Desktop/DRAGNet-NutNet-site-list.csv')
+dragnutsites <- read.csv("/Users/ingridslette/Desktop/nut-drag-site-coords-clim.csv",
+                            na.strings = c("NULL","NA"))
 
-bbox <- c(left = -168, bottom = -60, right = 178, top = 80)
+bbox <- c(left = -170, bottom = -60, right = 177, top = 80.5)
 myMap <- get_stadiamap(bbox, zoom = 4, maptype = "stamen_terrain_background")
 
-desired_order <- c("NutNet", "DRAGNet", "NutNet and DRAGNet", "Observational")
-dragnutnetsites$experiment_type <- factor(dragnutnetsites$experiment_type, levels = desired_order)
+desired_order <- c("NutNet", "DRAGNet", "Observational")
+dragnutsites$network <- factor(dragnutsites$network, levels = desired_order)
 
-cbp4 <- c("#ffa600", "#de324c", "#9656a2", "#56B4E9")
+head(dragnutsites)
+unique(dragnutsites$network)
 
-ggmap(myMap) + geom_point(data = dragnutnetsites, aes(x = longitude, y = latitude, fill = experiment_type), 
-                          cex=2, shape = 21, col = 'black') +
-  scale_fill_manual(values = cbp4) + 
-  labs(fill = "Experiment Type", x = "Longitude", y = "Latitude")
+dragnutmap <- ggmap(myMap) +
+  geom_point(
+    data = dragnutsites,
+    aes(x = longitude, y = latitude, fill = network, shape = network), 
+    size = 1.5) +
+  scale_fill_manual(values = c("#9656a2",  "#ff924c", "#0092E0")) +
+  scale_shape_manual(values = c(21, 22, 23, 24)) +
+  labs(fill = "Network", shape = "Network", x = "", y = "")
 
-
-# mapping DRAGNet and NutNet sites - no distinction 
-
-dragnutnetsites <- read.csv("/Users/ingridslette/Desktop/DragNutNet-site-list.csv")
-
-bbox <- c(left = -168, bottom = -60, right = 178, top = 80)
-myMap <- get_stadiamap(bbox, zoom = 4, maptype = "stamen_terrain_background")
-
-ggmap(myMap) + geom_point(data = dragnutnetsites, aes(x = longitude, y = latitude), 
-                          cex=1.5, shape = 21, col = 'black', fill = '#e2741a') + 
-  labs(x = "", y = "") +
-  theme(axis.ticks = element_blank(), axis.text = element_blank())
+dragnutmap
 
 
