@@ -10,39 +10,58 @@ has_stadiamaps_key()
 bbox <- c(left = -170, bottom = -60, right = 170, top = 80.5)
 myMap <- get_stadiamap(bbox, zoom = 4, maptype = "stamen_terrain_background")
 
-cbp2 <- c("#D55E00", "#56B4E9")
-
-ggmap(myMap) + geom_point(data = nutnetsites, aes(x = longitude, y = latitude, fill = experiment_type), 
-                          cex=2, shape = 21, col = 'black') + 
-  scale_fill_manual(values = cbp2) + 
-  labs(fill = "Site Type", x = "", y = "")
-
-ggmap(myMap) +
+nutnetmap1 <- ggmap(myMap) +
   geom_point(
     data = nutnetsites,
-    aes(x = longitude, y = latitude, fill = experiment_type),
-    cex = 2, shape = 21, col = "black"
-  ) +
-  scale_fill_manual(values = cbp2) +
-  labs(fill = "Site Type", x = "", y = "") +
-  theme(
-    legend.position = c(0.1, 0.3),   # lower-left corner in relative coordinates
-    axis.ticks = element_blank(),    # remove tick marks
-    axis.text = element_blank()      # remove tick labels
-  )
+    aes(x = longitude, y = latitude, fill = experiment_type), 
+    cex = 2, shape = 21, col = "black") +
+  scale_fill_manual(values = c("#ff924c", "#0092E0")) +
+  labs(fill = "Site Type", shape = "Site Type", x = "", y = "")
+
+nutnetmap1
 
 
-ggmap(myMap) +
+nutnetmap2 <- ggmap(myMap) +
   geom_point(
     data = nutnetsites,
-    aes(x = longitude, y = latitude, fill = experiment_type),
-    cex = 2, shape = 21, col = "black"
-  ) +
-  scale_fill_manual(values = cbp2) +
-  labs(fill = "Site Type", x = "", y = "") +
+    aes(x = longitude, y = latitude, fill = experiment_type), 
+    cex = 2, shape = 21, col = "black") +
+  scale_fill_manual(values = c("#ff924c", "#0092E0")) +
+  labs(x = "", y = "") +
   theme(
     legend.position = "none",
     axis.ticks = element_blank(),
     axis.text = element_blank()
   )
+
+nutnetmap2
+
+
+nutnetmap3 <- ggmap(myMap) +
+  geom_point(
+    data = nutnetsites,
+    aes(x = longitude, y = latitude), 
+    cex = 2, shape = 21, col = "black", fill = "#ff924c") +
+  labs(x = "", y = "")
+
+nutnetmap3
+
+
+nutnetmap4 <- ggmap(myMap) +
+  geom_point(
+    data = nutnetsites,
+    aes(x = longitude, y = latitude), 
+    cex = 2, shape = 21, col = "black", fill = "#ff924c") +
+  labs(x = "", y = "") +
+  theme(
+    legend.position = "none",
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  )
+
+nutnetmap4
+
+
+
+
 
